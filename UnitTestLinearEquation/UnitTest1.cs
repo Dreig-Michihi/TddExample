@@ -100,5 +100,12 @@ namespace UnitTestLinearEquation
             int n = -1;
             Assert.Equals(typeof(ArgumentException), new LinearEquation(n));
         }
+        [TestMethod]
+        public void FillWithDuplicates()
+        {
+            LinearEquation le = new LinearEquation(5);
+            le.FillWithDuplicates(4);
+            Assert.IsTrue(new double[] { 4, 4, 4, 4, 4 }.SequenceEqual((double[])le));
+        }
     }
 }

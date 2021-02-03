@@ -75,6 +75,12 @@ namespace Task2_cs
         {
             coefficients = le.coefficients;
         }
-
+        public void FillWithDuplicates( double value)
+        {
+            for (int i = 0; i < coefficients.Length; i++)
+            {
+                coefficients[i] = value;
+            }
+        }
     }
 }
