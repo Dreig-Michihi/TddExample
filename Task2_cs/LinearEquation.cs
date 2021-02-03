@@ -75,11 +75,162 @@ namespace Task2_cs
         {
             coefficients = le.coefficients;
         }
-        public void FillWithDuplicates( double value)
+        public void FillByDuplicates( double value)
         {
             for (int i = 0; i < coefficients.Length; i++)
             {
                 coefficients[i] = value;
+            }
+        }
+        public void FillByRandomValues(double min, double max)
+        {
+            if (max >= min)
+            {
+                Random rand = new Random();
+                for (int i = 0; i < coefficients.Length; i++)
+                    coefficients[i] = rand.NextDouble() * (max - min) + min;
+            }
+            else throw new ArgumentException();
+        }
+        public void FillByRandomValues(double min, double max, int seed)
+        {
+            if (max >= min)
+            {
+                Random rand = new Random(seed);
+                for (int i = 0; i < coefficients.Length; i++)
+                    coefficients[i] = rand.NextDouble() * (max - min) + min;
+            }
+            else throw new ArgumentException();
+        }
+        public static LinearEquation operator +(LinearEquation a, LinearEquation b)
+        {
+            int resLength = a.coefficients.Length>=b.coefficients.Length?a.coefficients.Length:b.coefficients.Length;
+            List<double> res = new List<double>();
+            for (int i = 0; i < resLength; i++)
+            {
+                res.Add(
+                    (i < a.coefficients.Length ? a.coefficients[i] : 0) + 
+                    (i < b.coefficients.Length ? b.coefficients[i] : 0));
+            }
+            return new LinearEquation(res);
+        }
+        public static LinearEquation operator -(LinearEquation a, LinearEquation b)
+        {
+            int resLength = a.coefficients.Length >= b.coefficients.Length ? a.coefficients.Length : b.coefficients.Length;
+            List<double> res = new List<double>();
+            for (int i = 0; i < resLength; i++)
+            {
+                res.Add(
+                    (i < a.coefficients.Length ? a.coefficients[i] : 0) - 
+                    (i < b.coefficients.Length ? b.coefficients[i] : 0));
+            }
+            return new LinearEquation(res);
+        }
+        public static LinearEquation operator *(LinearEquation a, double r)
+        {
+            LinearEquation res = new LinearEquation(a);
+            for (int i = 0; i < res.coefficients.Length; i++)
+            {
+                res.coefficients[i] *= r;
+            }
+            return res;
+        }
+        public static LinearEquation operator *(double r, LinearEquation a)
+        {
+            return a * r;
+        }
+        public static LinearEquation operator -(LinearEquation a)
+        {
+            LinearEquation res = new LinearEquation(a);
+            for (int i = 0; i < res.coefficients.Length; i++)
+            {
+                res.coefficients[i] *= -1;
+            }
+            return res;
+        }
+
+        public static bool operator ==(LinearEquation a, LinearEquation b)
+        {
+            int maxLength = a.coefficients.Length >= b.coefficients.Length ? a.coefficients.Length : b.coefficients.Length;
+            for (int i = 0; i < maxLength; i++)
+            {
+                if (
+                    (i < a.coefficients.Length ? a.coefficients[i] : 0) !=
+                    (i < b.coefficients.Length ? b.coefficients[i] : 0))
+                    return false;
+            }
+            return true;
+        }
+        public static bool operator !=(LinearEquation a, LinearEquation b)
+        {
+            return !(a == b);
+        }
+        public static bool operator false(LinearEquation a)
+        {
+            return a ? false : true;
+        }
+        public static bool operator true(LinearEquation a)
+        {
+            if (a.coefficients[0] == 0)
+            {
+                return true;
+            }
+            for (int i = 1; i < a.coefficients.Length; i++)
+            {
+                if (a.coefficients[i] != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public override string ToString()
+        {
+            string res = "";
+            for (int i = coefficients.Length - 1; i >= 0; i--)
+            {
+                if (coefficients[i] != 0)
+                {
+                    if (res != "" && coefficients[i] > 0)
+                    {
+                        res += "+";
+                    }
+                    res += "" + coefficients[i];
+                    if (i != 0)
+                    {
+                        res += "x" + i;
+                    }
+                }
+            }
+            if (res == "")
+            {
+                res += "0";
+            }
+            res += "=0";
+            return res;
+        }
+        public int Degree
+        {
+            get
+            {
+                int degree = 0;
+                for (int i = 0; i < coefficients.Length; i++)
+                {
+                    if (coefficients[i] != 0)
+                    {
+                        degree = i;//x's index of the far left non zero coefficient(in ToString)
+                    }
+                }
+                return degree;
+            }
+        }
+        public double this[int index]
+        {
+            get
+            {
+                if (index < 0 || index > Degree)
+                    throw new ArgumentOutOfRangeException();
+                return coefficients[index];
             }
         }
     }

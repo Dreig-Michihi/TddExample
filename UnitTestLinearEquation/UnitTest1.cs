@@ -101,11 +101,177 @@ namespace UnitTestLinearEquation
             Assert.Equals(typeof(ArgumentException), new LinearEquation(n));
         }
         [TestMethod]
-        public void FillWithDuplicates()
+        public void FillByDuplicates()
         {
             LinearEquation le = new LinearEquation(5);
-            le.FillWithDuplicates(4);
+            le.FillByDuplicates(4);
             Assert.IsTrue(new double[] { 4, 4, 4, 4, 4 }.SequenceEqual((double[])le));
+        }
+        [TestMethod]
+        public void FillByRandomValues()
+        {
+            LinearEquation le1 = new LinearEquation(5);
+            LinearEquation le2 = new LinearEquation(5);
+            le1.FillByRandomValues(-10.5, 10.5, 123);
+            le2.FillByRandomValues(-10.5, 10.5, 123);
+            Assert.IsTrue(((double[])le1).SequenceEqual((double[])le2));
+        }
+        [TestMethod]
+        public void FillByRandomValuesMinBiggerThanMax()
+        {
+            LinearEquation le = new LinearEquation(5);
+            Assert.ThrowsException<ArgumentException>(() => le.FillByRandomValues(10.5, -10.5));
+        }
+        [TestMethod]
+        public void SumWithSameCountOfCoefficientsInBothEquations()
+        {
+            LinearEquation l1 = new LinearEquation(new double[] { -1, 0, 1, 2 });
+            LinearEquation l2 = new LinearEquation(new double[] { 3, 4, 5, -2 });
+            Assert.IsTrue(new double[] { 2, 4, 6, 0 }.SequenceEqual((double[])(l1 + l2)));
+        }
+        [TestMethod]
+        public void SumWithCountOfCoefficientsIsGreaterInFirstEquation()
+        {
+            LinearEquation l1 = new LinearEquation(new double[] { 1, -2, 3, 4 });
+            LinearEquation l2 = new LinearEquation(new double[] { 3, 4 });
+            Assert.IsTrue(new double[] { 4, 2, 3, 4 }.SequenceEqual((double[])(l1 + l2)));
+        }
+        [TestMethod]
+        public void SumWithCountOfCoefficientsIsGreaterInSecondEcuation()
+        {
+            LinearEquation l1 = new LinearEquation(new double[] { 3, 4 });
+            LinearEquation l2 = new LinearEquation(new double[] { 1, -2, 3, 4 });
+            Assert.IsTrue(new double[] { 4, 2, 3, 4 }.SequenceEqual((double[])(l1 + l2)));
+        }
+        [TestMethod]
+        public void SubstructionWithSameCountOfCoefficients()
+        {
+            LinearEquation l1 = new LinearEquation(new double[] { -1, 0, 1, 2 });
+            LinearEquation l2 = new LinearEquation(new double[] { 3, 4, 5, -2 });
+            Assert.IsTrue(new double[] { -4, -4, -4, 4 }.SequenceEqual((double[])(l1 - l2)));
+        }
+        [TestMethod]
+        public void SubstructionWithCountOfCoefficientsIsGreaterInFirstEquation()
+        {
+            LinearEquation l1 = new LinearEquation(new double[] { 1, -2, 3, 4 });
+            LinearEquation l2 = new LinearEquation(new double[] { 3, 4 });
+            Assert.IsTrue(new double[] { -2, -6, 3, 4 }.SequenceEqual((double[])(l1 - l2)));
+        }
+        [TestMethod]
+        public void SubstructionWithCountOfCoefficientsIsGreaterInSecondEcuation()
+        {
+            LinearEquation l1 = new LinearEquation(new double[] { 3, 4 });
+            LinearEquation l2 = new LinearEquation(new double[] { 1, -2, 3, 4 });
+            Assert.IsTrue(new double[] { 2, 6, -3, -4 }.SequenceEqual((double[])(l1 - l2)));
+        }
+        [TestMethod]
+        public void MultiplicationLeft()
+        {
+            double r = 3;
+            LinearEquation le = new LinearEquation(new double[] { 1, -2, 3, 4 });
+            Assert.IsTrue(new double[] { 3, -6, 9, 12 }.SequenceEqual((double[])(r * le)));
+        }
+        [TestMethod]
+        public void MultiplicationRight()
+        {
+            double r = -3;
+            LinearEquation le = new LinearEquation(new double[] { 1, -2, 3, 4 });
+            Assert.IsTrue(new double[] { -3, 6, -9, -12 }.SequenceEqual((double[])(le * r)));
+        }
+        [TestMethod]
+        public void InverseLinearEquation()
+        {
+            LinearEquation le = new LinearEquation(new double[] { 1, -2, 3, -4, -5, 6, -7, 0, 1 });
+            Assert.IsTrue(new double[] { -1, 2, -3, 4, 5, -6, 7, 0, -1 }.SequenceEqual((double[])(-le)));
+        }
+        [TestMethod]
+        public void EqualityWithSameCountOfCoefficients1()
+        {
+            LinearEquation le1 = new LinearEquation(new double[] { 1, -2, 3, -4, -5, 6, -7, 0, 1 });
+            LinearEquation le2 = new LinearEquation(new double[] { 1, -2, 3, -4, -5, 6, -7, 0, 1 });
+            Assert.IsTrue(le1==le2);
+        }
+        [TestMethod]
+        public void EqualityWithDifferentCountOfCoefficients()
+        {
+            LinearEquation le1 = new LinearEquation(new double[] { 1, -2, 3, -4, -5, 0, 0, 0, 0 });
+            LinearEquation le2 = new LinearEquation(new double[] { 1, -2, 3, -4, -5 });
+            Assert.IsTrue(le1 == le2);
+        }
+        [TestMethod]
+        public void InequalityWithSameCountOfCoefficients()
+        {
+            LinearEquation le1 = new LinearEquation(new double[] { 1, -2, 6, -4, -5 });
+            LinearEquation le2 = new LinearEquation(new double[] { 1, 2, 3, -4, -5 });
+            Assert.IsTrue(le1 != le2);
+        }
+        [TestMethod]
+        public void InequalityWithDifferentCountOfCoefficients()
+        {
+            LinearEquation le1 = new LinearEquation(new double[] { 1, -2, 6, -4, -5, 0, 0, 0, 0 });
+            LinearEquation le2 = new LinearEquation(new double[] { 1, 2, 3, -4, -5 });
+            Assert.IsTrue(le1 != le2);
+        }
+        [TestMethod]
+        public void TrueEquation()
+        {
+            LinearEquation le = new LinearEquation(new double[3] { 2, 3, 1 });
+            Assert.IsTrue(le ? true : false);
+        }
+        [TestMethod]
+        public void FalseEquation()
+        {
+            LinearEquation le = new LinearEquation(new double[3] { 2, 0, 0 });
+            Assert.IsFalse(le ? true : false);
+        }
+        [TestMethod]
+        public void ToStringConversion()
+        {
+            LinearEquation le = new LinearEquation(new double[3] { 2, -1, 4 });
+            Assert.AreEqual("4x2-1x1+2=0", le.ToString());
+        }
+        [TestMethod]
+        public void ToStringWithMinus()
+        {
+            LinearEquation le = new LinearEquation(new double[3] { -5, 2, -4 });
+            Assert.AreEqual("-4x2+2x1-5=0", le.ToString());
+        }
+        [TestMethod]
+        public void ToStringWithZeroArgument()
+        {
+            LinearEquation le = new LinearEquation(new double[4] { 0, 2, 0, 4 });
+            Assert.AreEqual("4x3+2x1=0", le.ToString());
+        }
+        [TestMethod]
+        public void Coefficient()
+        {
+            LinearEquation le = new LinearEquation(new double[3] { 3, 2, 4 });
+            Assert.AreEqual(2, le[1]);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void CoefficientOutOfRange()
+        {
+            LinearEquation le = new LinearEquation(new double[6] { 2, 3, 1, 0, 0, 0 });
+            Assert.Equals(typeof(ArgumentOutOfRangeException), le[4]);
+        }
+        [TestMethod]
+        public void Degree()
+        {
+            LinearEquation le = new LinearEquation(new double[4] { 1, 2, 0, 4 });
+            Assert.AreEqual(3, le.Degree);
+        }
+        [TestMethod]
+        public void DegreeWithLeftZeros()
+        {
+            LinearEquation le = new LinearEquation(new double[4] { 0, 0, 1, 4 });
+            Assert.AreEqual(3, le.Degree);
+        }
+        [TestMethod]
+        public void DegreeWithRightZeros()
+        {
+            LinearEquation le = new LinearEquation(new double[4] { 1, 2, 0, 0 });
+            Assert.AreEqual(1, le.Degree);
         }
     }
 }
