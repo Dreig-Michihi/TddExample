@@ -30,6 +30,7 @@ namespace UnitTestLinearEquation
             Assert.IsTrue(new double[] { 5, 0 }.SequenceEqual((double[])le));
         }
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void StringConstructorWithWrongInput()
         {
             string s = "5 1,2,3 seven gnsjldfsl 1.9g";
