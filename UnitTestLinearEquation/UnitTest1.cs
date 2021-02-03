@@ -39,14 +39,14 @@ namespace UnitTestLinearEquation
         [TestMethod]
         public void ListConstructorWithArray()
         {
-            double[] array = new double[] { 2, 1, 5.6, 7, 8 };
+            double[] array = new double[] { 2, -5.6, 7.2, -8 };
             LinearEquation le = new LinearEquation(array);
             Assert.IsTrue(array.SequenceEqual((double[])le));
         }
         [TestMethod]
         public void ListConstructorWithList()
         {
-            List<double> list = new List<double> { 2, 1, 5.6, 7, 8 };
+            List<double> list = new List<double> { 2, -5.6, 7.2, -8 };
             LinearEquation le = new LinearEquation(list);
             Assert.IsTrue(list.SequenceEqual((double[])le));
         }

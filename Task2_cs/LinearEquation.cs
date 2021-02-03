@@ -47,15 +47,33 @@ namespace Task2_cs
 
         public LinearEquation(IList<double> list)
         {
-
+            if (list.Count == 0)
+            {
+                coefficients = new double[] { 0, 0 };
+            }
+            else if (list.Count == 1)
+            {
+                coefficients = new double[] { list[0], 0 };
+            }
+            else
+            {
+                coefficients = new double[list.Count];
+                for (int i = 0; i < list.Count; i++)
+                    coefficients[i] = list[i];
+            }
         }
         public LinearEquation(int n)
         {
-
+            if (n >= 2)
+                coefficients = new double[n];
+            else if (n >= 0)
+                coefficients = new double[2];
+            else
+                throw new ArgumentException();
         }
         public LinearEquation(LinearEquation le)
         {
-
+            coefficients = le.coefficients;
         }
 
     }
