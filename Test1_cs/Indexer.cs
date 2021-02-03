@@ -10,9 +10,13 @@ namespace Test1_cs
     {
         double[] arr;
         int startIndex, endIndex;
-        public Indexer(double[] arr, int startIndex, int endIndex)
+        public Indexer(double[] array, int firstIndex, int length)
         {
-
+            if (firstIndex < 0 || length <= 0 || firstIndex + length >= array.Length)
+                throw new ArgumentException();
+            arr = array;
+            startIndex = firstIndex;
+            endIndex = firstIndex + length - 1;
         }
         public int Length
         {
