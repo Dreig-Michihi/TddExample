@@ -1,0 +1,7 @@
+C:\Users\й\OneDrive\Документы\5й семестр Последний долг\TddExample-kohai\TddExample\Test1_cs\bin\Debug\Test1_cs.exe.config
+C:\Users\й\OneDrive\Документы\5й семестр Последний долг\TddExample-kohai\TddExample\Test1_cs\bin\Debug\Test1_cs.exe
+C:\Users\й\OneDrive\Документы\5й семестр Последний долг\TddExample-kohai\TddExample\Test1_cs\bin\Debug\Test1_cs.pdb
+C:\Users\й\OneDrive\Документы\5й семестр Последний долг\TddExample-kohai\TddExample\Test1_cs\obj\Debug\Task1_cs.csprojAssemblyReference.cache
+C:\Users\й\OneDrive\Документы\5й семестр Последний долг\TddExample-kohai\TddExample\Test1_cs\obj\Debug\Task1_cs.csproj.CoreCompileInputs.cache
+C:\Users\й\OneDrive\Документы\5й семестр Последний долг\TddExample-kohai\TddExample\Test1_cs\obj\Debug\Test1_cs.exe
+C:\Users\й\OneDrive\Документы\5й семестр Последний долг\TddExample-kohai\TddExample\Test1_cs\obj\Debug\Test1_cs.pdb
