@@ -9,9 +9,9 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace LinearEquationTestCpp
+namespace UnitTestLinearEquationCpp
 {
-	TEST_CLASS(LinearEquationTestCpp) {
+	TEST_CLASS(UnitTestLinearEquationCpp) {
 public:
 	TEST_METHOD(StringConstructor) {
 		std::string s = "1 1.5 2.6 -4 89 13.4";

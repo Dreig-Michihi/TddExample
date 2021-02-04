@@ -6,9 +6,9 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace IndexerTestCpp
+namespace UnitTestIndexer_cpp
 {
-	TEST_CLASS(IndexerTestCpp)
+	TEST_CLASS(UnitTestIndexer_cpp)
 	{
 	private:
 		double* array = new double[4]{ 1, 2, 3, 4 };
